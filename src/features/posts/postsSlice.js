@@ -4,7 +4,6 @@ import {
   addPost,
   getPost,
   deletePost,
-  updatePost,
 } from '../../network/postsApis';
 
 export const postsSlice = createSlice({
@@ -57,14 +56,10 @@ export const postsSlice = createSlice({
       .addCase(deletePost.fulfilled, (state, action) => {
         state.posts = state.posts.filter((post) => post.id !== action.payload);
         state.loading = false;
-      })
-
-      .addCase(updatePost.fulfilled, (state, action) => {
-        console.log(action);
       });
   },
 });
 
-export { fetchPosts, addPost, getPost, deletePost, updatePost };
+export { fetchPosts, addPost, getPost, deletePost };
 
 export default postsSlice.reducer;

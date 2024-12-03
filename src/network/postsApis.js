@@ -35,16 +35,3 @@ export const deletePost = createAsyncThunk(
     return postId;
   }
 );
-
-// update post
-export const updatePost = createAsyncThunk(
-  'posts/updatePost',
-  async ({ postId, updateData }) => {
-    const response = await axios.patch(
-      `https://jsonplaceholder.typicode.com/posts/${postId}`,
-      updateData
-    );
-
-    return response.data;
-  }
-);

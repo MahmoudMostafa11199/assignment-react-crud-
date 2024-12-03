@@ -4,7 +4,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 
 import './style.css';
-import { deletePost, updatePost } from './postsSlice';
+import { deletePost } from './postsSlice';
 import Button from '../../Components/Button/Button';
 
 const PostsList = ({ post, onclick, postDetails = false }) => {
@@ -21,10 +21,6 @@ const PostsList = ({ post, onclick, postDetails = false }) => {
     });
   };
 
-  const handleUpdatePost = (id, post) => {
-    dispatch(updatePost(id, post));
-  };
-
   return (
     <div className="card post-item" key={post.id}>
       <div className="card-body">
@@ -35,7 +31,7 @@ const PostsList = ({ post, onclick, postDetails = false }) => {
         {!postDetails && (
           <div className="postControlButtons">
             <Button btnClass="btn btn-primary">
-              <FontAwesomeIcon icon={faEdit} onclick={handleUpdatePost} />
+              <FontAwesomeIcon icon={faEdit} />
               <span> Update</span>
             </Button>
             <Button
