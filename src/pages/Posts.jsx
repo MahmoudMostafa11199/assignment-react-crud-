@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -6,11 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import Post from '../features/posts/Post';
 import AddPost from '../features/posts/AddPost';
 import Spinner from '../Components/Spinner';
+import UpdatePostModal from '../features/posts/UpdatePostModal';
 
 import { fetchPosts } from '../features/posts/postsSlice';
 import '../features/posts/style.css';
 
 function Posts() {
+  const [currentPost, setCurrentPost] = useState({ title: '', body: '' });
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { posts, loading: isLoading } = useSelector((state) => state.postsData);
@@ -21,6 +25,11 @@ function Posts() {
 
   const handleShowPost = (id) => {
     navigate(`/posts/${id}`);
+  };
+
+  const handleModal = (post = {}) => {
+    setCurrentPost(post);
+    setShowModal((modal) => !modal);
   };
 
   return (
@@ -35,13 +44,24 @@ function Posts() {
             {isLoading && <Spinner />}
             {posts &&
               posts.map((post) => (
-                <Post key={post.id} post={post} onclick={handleShowPost} />
+                <Post
+                  key={post.id}
+                  post={post}
+                  onclick={handleShowPost}
+                  handleModal={handleModal}
+                />
               ))}
           </div>
 
           <AddPost />
         </div>
       </div>
+      <UpdatePostModal
+        show={showModal}
+        handleClose={handleModal}
+        currentPost={currentPost}
+        setCurrentPost={setCurrentPost}
+      />
       <ToastContainer />
     </React.Fragment>
   );

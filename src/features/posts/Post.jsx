@@ -7,7 +7,7 @@ import './style.css';
 import { deletePost } from './postsSlice';
 import Button from '../../Components/Button/Button';
 
-const PostsList = ({ post, onclick, postDetails = false }) => {
+const Post = ({ post, onclick, postDetails = false, handleModal }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.postsData.loading);
 
@@ -30,7 +30,10 @@ const PostsList = ({ post, onclick, postDetails = false }) => {
         <p className="card-text">{post.body}</p>
         {!postDetails && (
           <div className="postControlButtons">
-            <Button btnClass="btn btn-primary">
+            <Button
+              btnClass="btn btn-primary"
+              onclick={() => handleModal(post)}
+            >
               <FontAwesomeIcon icon={faEdit} />
               <span> Update</span>
             </Button>
@@ -49,4 +52,4 @@ const PostsList = ({ post, onclick, postDetails = false }) => {
   );
 };
 
-export default PostsList;
+export default Post;

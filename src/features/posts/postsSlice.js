@@ -4,6 +4,7 @@ import {
   addPost,
   getPost,
   deletePost,
+  updatePost,
 } from '../../network/postsApis';
 
 export const postsSlice = createSlice({
@@ -50,6 +51,20 @@ export const postsSlice = createSlice({
         state.loading = false;
       })
 
+      .addCase(updatePost.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        const postIndex = state.posts.findIndex(
+          (post) => post.id === action.payload.id
+        );
+
+        if (postIndex !== -1) {
+          state.posts[postIndex] = action.payload;
+        }
+        state.loading = false;
+      })
+
       .addCase(deletePost.pending, (state, action) => {
         state.loading = true;
       })
@@ -60,6 +75,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export { fetchPosts, addPost, getPost, deletePost };
+export { fetchPosts, addPost, getPost, deletePost, updatePost };
 
 export default postsSlice.reducer;
